@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+signal mob_died()
+
 var speed: float = randf_range(2, 4.0)
 var health: float = 20.0
 
@@ -25,6 +27,7 @@ func take_damage(damages: float):
 		set_physics_process(false)
 		gravity_scale = 1.0
 		timer.start()
+		mob_died.emit()
 
 func _on_timer_timeout() -> void:
 	if health <= 0.0:
