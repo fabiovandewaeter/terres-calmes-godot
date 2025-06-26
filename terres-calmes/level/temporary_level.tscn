@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dp7sxe5xl5shk"]
+[gd_scene load_steps=9 format=3 uid="uid://dp7sxe5xl5shk"]
 
 [ext_resource type="Texture2D" uid="uid://05bx76udbv7n" path="res://level/checkboard.png" id="1_cig4d"]
 [ext_resource type="PackedScene" uid="uid://daexliqbeu6d5" path="res://player/player.tscn" id="2_bc4qa"]
 [ext_resource type="PackedScene" uid="uid://bdd2pfht8av7p" path="res://mob/mob.tscn" id="3_gmctb"]
+[ext_resource type="PackedScene" uid="uid://c2fevd8ahlvat" path="res://mob/spawner/mob_spawner_3d.tscn" id="4_vca4y"]
 
 [sub_resource type="Environment" id="Environment_pev5d"]
 background_mode = 1
@@ -88,3 +89,6 @@ transform = Transform3D(-0.999655, 0, -0.0262468, 0, 1, 0, 0.0262468, 0, -0.9996
 
 [node name="Mob" parent="." instance=ExtResource("3_gmctb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.98444, 0)
+
+[node name="MobSpawner3D" parent="." instance=ExtResource("4_vca4y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02059, 24.8364)
