@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://05bx76udbv7n" path="res://level/checkboard.png" id="1_cig4d"]
 [ext_resource type="PackedScene" uid="uid://daexliqbeu6d5" path="res://player/player.tscn" id="2_bc4qa"]
-[ext_resource type="PackedScene" uid="uid://gphfypvp3g6" path="res://mob/mob.tscn" id="3_gmctb"]
+[ext_resource type="PackedScene" uid="uid://bdd2pfht8av7p" path="res://mob/mob.tscn" id="3_gmctb"]
 
 [sub_resource type="Environment" id="Environment_pev5d"]
 background_mode = 1
@@ -43,7 +43,7 @@ albedo_texture = ExtResource("1_cig4d")
 uv1_triplanar = true
 uv1_triplanar_sharpness = 4.0
 
-[node name="TemporaryLevel" type="Node3D"]
+[node name="Game" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pev5d")
