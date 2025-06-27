@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://daexliqbeu6d5"]
+[gd_scene load_steps=6 format=3 uid="uid://daexliqbeu6d5"]
 
 [ext_resource type="PackedScene" uid="uid://b1tf3coffvwto" path="res://player/simple_gun/gun_model.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://c44fl3fh01yo3" path="res://player/player.gd" id="1_rkbax"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rkbax"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
 
@@ -14,25 +16,30 @@ script = ExtResource("1_rkbax")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04958, 0)
 shape = SubResource("CapsuleShape3D_kqu6x")
 
-[node name="gun_model" parent="CollisionShape3D" instance=ExtResource("1_oul6g")]
-transform = Transform3D(-0.299845, 0, 0.00963777, 0, 0.3, 0, -0.00963777, 0, -0.299845, 0.490883, 0.33208, -0.518583)
-
-[node name="Marker3D" type="Marker3D" parent="CollisionShape3D/gun_model"]
+[node name="CameraPivot" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0.017409, 0, 0.541618)
-
-[node name="CameraOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58281, 0.00571549)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraOrigin"]
-spring_length = 4.0
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_rkbax")
+spring_length = 8.0
 
-[node name="Camera3D" type="Camera3D" parent="CameraOrigin/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11211, 2.78154)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05007, 0)
 mesh = SubResource("CapsuleMesh_kqu6x")
+
+[node name="gun_model" parent="MeshInstance3D" instance=ExtResource("1_oul6g")]
+transform = Transform3D(-0.299845, 0, 0.00963777, 0, 0.3, 0, -0.00963777, 0, -0.299845, 0.490883, 0.33159, -0.518583)
+
+[node name="Marker3D" type="Marker3D" parent="MeshInstance3D/gun_model"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0.017409, 0, 0.541618)
 
 [node name="ShootingCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
