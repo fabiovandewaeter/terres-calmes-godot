@@ -5,6 +5,8 @@ const GRAVITY: float = 30.0
 const MIN_ZOOM: int = 0
 const MAX_ZOOM: int = 20
 
+var health: float = 200000.0
+
 @export_group("Camera")
 @export_range(0.0, 1.0) var mouse_sensitivity = 0.005
 @export_group("Movement")
@@ -15,7 +17,8 @@ const MAX_ZOOM: int = 20
 
 @onready var camera_pivot: Node3D = %CameraPivot
 @onready var camera_3d: Camera3D = %Camera3D
-@onready var mesh_instance_3d: MeshInstance3D = %MeshInstance3D
+@onready var knight_model: Node3D = %KnightModel
+
 @onready var spring_arm_3d: SpringArm3D = %SpringArm3D
 
 var _last_movement_direction: Vector3 = Vector3.BACK
@@ -70,17 +73,31 @@ func _physics_process(delta: float) -> void:
 	var is_aiming = Input.is_action_pressed("right_click")
 	if move_direction.length() > 0.2 and not is_aiming:
 		_last_movement_direction = move_direction
-		var target_angle = Vector3.FORWARD.signed_angle_to(_last_movement_direction, Vector3.UP)
-		mesh_instance_3d.global_rotation.y = lerp_angle(mesh_instance_3d.global_rotation.y, target_angle, rotation_speed * delta)
+		var target_angle = Vector3.BACK.signed_angle_to(_last_movement_direction, Vector3.UP)
+		knight_model.global_rotation.y = lerp_angle(knight_model.global_rotation.y, target_angle, rotation_speed * delta)
 	elif is_aiming:	# if aiming
 		var cam_dir = -camera_3d.global_transform.basis.z
 		cam_dir.y = 0
 		cam_dir = cam_dir.normalized()
-		var target_angle = Vector3.FORWARD.signed_angle_to(cam_dir, Vector3.UP)
-		mesh_instance_3d.global_rotation.y = target_angle
+		var target_angle = Vector3.BACK.signed_angle_to(cam_dir, Vector3.UP)
+		knight_model.global_rotation.y = target_angle
 	
-	if Input.is_action_pressed("shoot") and %ShootingCooldown.is_stopped():
-		shoot_bullet()
+	if Input.is_action_pressed("left_click") and %ShootingCooldown.is_stopped():
+		attack()
+		#shoot_bullet()
+
+func take_damage(damages: float):
+	if health <= 0.0:
+		return
+	knight_model.hurt() # animation
+	health -= damages
+	if health <= 0.0:
+		set_physics_process(false)
+		#timer.start()
+		#mob_died.emit()
+
+func attack():
+	knight_model.attack()
 
 func shoot_bullet():
 	const BULLET_3D = preload("res://player/bullet_3d.tscn")

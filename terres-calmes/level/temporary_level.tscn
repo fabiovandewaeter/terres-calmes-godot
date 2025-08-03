@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dp7sxe5xl5shk"]
+[gd_scene load_steps=11 format=3 uid="uid://dp7sxe5xl5shk"]
 
 [ext_resource type="Texture2D" uid="uid://05bx76udbv7n" path="res://level/checkboard.png" id="1_cig4d"]
 [ext_resource type="Script" uid="uid://l2ypdoc5on5y" path="res://level/temporary_level.gd" id="1_q5axl"]
 [ext_resource type="PackedScene" uid="uid://daexliqbeu6d5" path="res://player/player.tscn" id="2_bc4qa"]
 [ext_resource type="PackedScene" uid="uid://c2fevd8ahlvat" path="res://mob/spawner/mob_spawner_3d.tscn" id="4_vca4y"]
+[ext_resource type="Script" uid="uid://c3qb7heh086j8" path="res://level/cannon.gd" id="5_q5axl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vca4y"]
 font_size = 25
@@ -107,5 +108,15 @@ material = SubResource("StandardMaterial3D_7l0sc")
 
 [node name="Player" parent="." instance=ExtResource("2_bc4qa")]
 transform = Transform3D(-0.999655, 0, -0.0262468, 0, 1, 0, 0.0262468, 0, -0.999655, -2.40587, 1.3154, 1.04326)
+
+[node name="Cannon" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.37368, 2.1938, -3.05713)
+script = ExtResource("5_q5axl")
+
+[node name="ShootingCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
 
 [connection signal="mob_spawned" from="MobSpawner3D" to="." method="_on_mob_spawner_3d_mob_spawned"]

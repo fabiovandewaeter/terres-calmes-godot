@@ -2,12 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://b1tf3coffvwto" path="res://player/simple_gun/gun_model.glb" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://c44fl3fh01yo3" path="res://player/player.gd" id="1_rkbax"]
+[ext_resource type="PackedScene" uid="uid://cxh1vat0pjr0t" path="res://player/knight.tscn" id="2_g1dw6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rkbax"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_kqu6x"]
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_rkbax")
@@ -29,19 +28,18 @@ spring_length = 8.0
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11211, 2.78154)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05007, 0)
-mesh = SubResource("CapsuleMesh_kqu6x")
-
-[node name="gun_model" parent="MeshInstance3D" instance=ExtResource("1_oul6g")]
-transform = Transform3D(-0.299845, 0, 0.00963777, 0, 0.3, 0, -0.00963777, 0, -0.299845, 0.490883, 0.33159, -0.518583)
-
-[node name="Marker3D" type="Marker3D" parent="MeshInstance3D/gun_model"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0.017409, 0, 0.541618)
-
 [node name="ShootingCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
+
+[node name="KnightModel" parent="." instance=ExtResource("2_g1dw6")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="gun_model" parent="KnightModel" instance=ExtResource("1_oul6g")]
+transform = Transform3D(0.299845, 0, -0.0096378, 0, 0.3, 0, 0.0096378, 0, 0.299845, -0.490883, 1.38166, 0.518583)
+
+[node name="Marker3D" type="Marker3D" parent="KnightModel/gun_model"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0.017409, 0, 0.541618)
